@@ -95,7 +95,7 @@ DATABASES = {
    'default' : dj_database_url.parse(private_db_url)
 }
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = `/app/media`
 MEDIA_URL = '/media/'
 
 
