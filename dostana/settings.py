@@ -81,10 +81,19 @@ TEMPLATES = [
 ]
 
 
+# settings.py
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'railway',  # Replace 'your_database_name' with your database name
+        'USER': 'root',  # Replace 'your_mysql_username' with your MySQL username
+        'PASSWORD': 'cbDg3hF4Ccga6-G5D5D3GA-GAF4bEH4G',  # Replace 'your_mysql_password' with your MySQL password
+        'HOST': 'monorail.proxy.rlwy.net',  # Change if your MySQL database is hosted on a different server
+        'PORT': '16588',  # Change if your MySQL server is configured to use a different port
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
