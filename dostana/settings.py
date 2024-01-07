@@ -32,7 +32,10 @@ SECRET_KEY = '6f2c4dfc4490a511d09f5bf25b5e2096e2079eb4bdfd612d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['dostana.biz', 'www.dostana.biz']
+
+
+CSRF_TRUSTED_ORIGINS = ['https://dostana.biz','https://www.dostana.biz']
 
 
 CSRF_TRUSTED_ORIGINS = ['https://web-production-71fa.up.railway.app']
