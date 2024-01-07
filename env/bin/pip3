@@ -1,4 +1,4 @@
-#!/www/wwwroot/dostana/env/bin/python
+#!/home/kriim/Desktop/dostanagithub/dostana/Socialmediawebsitedjango/env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
