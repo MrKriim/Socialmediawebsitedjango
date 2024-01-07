@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 
-
+import dj_database_url
 
 
 from pathlib import Path
@@ -87,17 +87,13 @@ TEMPLATES = [
 # settings.py
 
 # Update the DATABASES setting
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # Database engine
-        'NAME': 'railway',                    # Database name
-        'USER': 'postgres',                    # Database user
-        'PASSWORD': '33fEc6afgbec62-d4GaBbc3C*6C-f4gd',            # Database password
-        'HOST': 'monorail.proxy.rlwy.net',                       # Database host (change if different)
-        'PORT': '19736',                                # Database port (leave empty for default)
-    }
-}
 
+
+private_db_url = 'postgresql://postgres:33fEc6afgbec62-d4GaBbc3C*6C-f4gd@postgres.railway.internal:5432/railway'
+
+DATABASES = {
+   'default' : dj_database_url.parse(private_db_url)
+}
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
