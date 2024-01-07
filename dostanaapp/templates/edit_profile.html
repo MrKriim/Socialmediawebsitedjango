@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% load custom_tags %}
+{% block title %} {{ user_profile.user.username}} | Dostana{% endblock %}
+{% block description %} {{ user_profile.user.username}} Profile{% endblock %}
+{% block keywords %}profile, Dostana, edit profile, profile details, profile picture{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Edit Profile</h1>
+    
+    <form method="post" enctype="multipart/form-data" class="text-center">
+        {% csrf_token %}
+        
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><label for="profile_pic">Profile Picture:</label></td>
+                        <td><input type="file" name="profile_pic" id="profile_pic" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="gender">Gender:</label></td>
+                        <td>
+                            <select name="gender" id="gender" class="form-select">
+                                <option value="">Select</option>
+                                <option value="M" {% if user_profile.gender == 'M' %}selected{% endif %}>Male</option>
+                                <option value="F" {% if user_profile.gender == 'F' %}selected{% endif %}>Female</option>
+                                <option value="O" {% if user_profile.gender == 'O' %}selected{% endif %}>Other</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>Marital Status:</label></td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" name="marital_status" value="ghershadishuda" class="form-check-input" id="ghershadishuda" {% if user_profile.marital_status == 'ghershadishuda' or not user_profile.marital_status %}checked{% endif %}>
+                                <label class="form-check-label" for="ghershadishuda">Gher Shadi Shuda</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" name="marital_status" value="shadishuda" class="form-check-input" id="shadishuda" {% if user_profile.marital_status == 'shadishuda' %}checked{% endif %}>
+                                <label class="form-check-label" for="shadishuda">Shadi Shuda</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="star">Star Sign:</label></td>
+                        <td>
+                            <select name="star" id="star" class="form-select">
+                                <option value="">Select</option>
+                                <option value="Aries" {% if user_profile.star == 'Aries' %}selected{% endif %}>Aries</option>
+                                <option value="Taurus" {% if user_profile.star == 'Taurus' %}selected{% endif %}>Taurus</option>
+                                <option value="Gemini" {% if user_profile.star == 'Gemini' %}selected{% endif %}>Gemini</option>
+                                <option value="Cancer" {% if user_profile.star == 'Cancer' %}selected{% endif %}>Cancer</option>
+                                <option value="Leo" {% if user_profile.star == 'Leo' %}selected{% endif %}>Leo</option>
+                                <option value="Virgo" {% if user_profile.star == 'Virgo' %}selected{% endif %}>Virgo</option>
+                                <option value="Libra" {% if user_profile.star == 'Libra' %}selected{% endif %}>Libra</option>
+                                <option value="Scorpio" {% if user_profile.star == 'Scorpio' %}selected{% endif %}>Scorpio</option>
+                                <option value="Sagittarius" {% if user_profile.star == 'Sagittarius' %}selected{% endif %}>Sagittarius</option>
+                                <option value="Capricorn" {% if user_profile.star == 'Capricorn' %}selected{% endif %}>Capricorn</option>
+                                <option value="Aquarius" {% if user_profile.star == 'Aquarius' %}selected{% endif %}>Aquarius</option>
+                                <option value="Pisces" {% if user_profile.star == 'Pisces' %}selected{% endif %}>Pisces</option>
+                                
+                                <!-- Add more star options with similar selected logic -->
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="about">About:</label></td>
+                        <td><textarea name="about" id="about" class="form-control" maxlength="500">{{ user_profile.about }}</textarea></td>
+                    </tr>
+                    <tr>
+                        <td><label for="age">Age:</label></td>
+                        <td><input type="number" name="age" id="age" min="12" max="100" class="form-control" value="{{ user_profile.age }}"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="city">City:</label></td>
+                        <td>
+                            <select name="city" id="city" class="form-select">
+                                <option value="">Select</option>
+                                <option value="Karachi" {% if user_profile.city == 'Karachi' %}selected{% endif %}>Karachi</option>
+                                <option value="Lahore" {% if user_profile.city == 'Lahore' %}selected{% endif %}>Lahore</option>
+                                <option value="Islamabad" {% if user_profile.city == 'Islamabad' %}selected{% endif %}>Islamabad</option>
+                                <option value="Rawalpindi" {% if user_profile.city == 'Rawalpindi' %}selected{% endif %}>Rawalpindi</option>
+                                <option value="Faisalabad" {% if user_profile.city == 'Faisalabad' %}selected{% endif %}>Faisalabad</option>
+                                <option value="Multan" {% if user_profile.city == 'Multan' %}selected{% endif %}>Multan</option>
+                                <!-- Add more city options with similar selected logic -->
+                            </select>
+                          
+                </tbody>
+            </table>
+        </div>
+        
+        {% if error_message %}
+        <p class="text-danger">{{ error_message }}</p>
+        {% endif %}
+        
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block title %}Popular Groups | Dostana{% endblock %}
+
+{% block description %}Discover popular public groups{% endblock %}
+
+{% block keywords %}popular groups, community, trending{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+    <h1>Popular Groups</h1>
+    {% if popular_groups %}
+    <div class="list-group" >
+        {% for group in popular_groups %}
+        <div style="margin-bottom:5px;"class="list-group-item border-5" >
+            <a href="{% url 'public_group_detail' group_id=group.pk %}" style="text-decoration: none;">
+                <h5 class="mb-1 text-truncate">{{ group.title }}</h5>
+            </a>
+            <p class="mb-0">
+                Created by:
+                {% if group.admin.userprofile.profile_pic %}
+                    <a href="{% url 'profile' username=group.admin.username %}" style="color: black; text-decoration: none;">
+                        <img src="{{ group.admin.userprofile.profile_pic.url }}" alt="Profile Image" class="rounded-circle" style="width: 32px; height: 32px; margin-right: 5px;">
+                        {{ group.admin.username|user_info|safe }}
+                    </a>
+                {% else %}
+                    <a href="{% url 'profile' username=group.admin.username %}" style="color: black; text-decoration: none;">{{ group.admin.username|user_info|safe }}</a>
+                {% endif %}
+            </p>
+            <span class="badge badge-primary">{{ forloop.counter }}</span>
+        </div>
+        <br>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No popular groups yet 🌟</p>
+    {% endif %}
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Share|Dostana{% endblock %}
+
+{% block description %}This is Share page of dostana You can Share text posts or images on this page{% endblock %}
+
+{% block keywords %}Share,textpost,photos,dostana,fotos{% endblock %}
+
+
+
+
+
+{% block content %}
+<div class="Container" align="center">
+<h1>Share</h1>
+
+<div class="form-group">
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+{% if content_error %}
+    <p style="color: red;">{{ content_error }}</p>
+{% endif %}
+
+<!-- Display picture title error message -->
+{% if picture_title_error %}
+    <h3 style="color: red;">{{ picture_title_error }}</h3>
+{% endif %}
+
+{% if dangerous_characters_error %}
+    <p style="color: red;">{{ dangerous_characters_error }}</p>
+{% endif %}
+
+<div class="error-message">
+    {% if error_message %}
+        <h3 style="color: red;">{{ error_message }}</h3>
+    {% endif %}
+</div>
+
+
+
+
+        <br>
+        
+     <form method="post" enctype="multipart/form-data">
+    <label for="content" class="badge">Kuch Likhain:</label>
+    <br>
+    <textarea id="content" name="content" rows="2" cols="40" maxlength="10000" required="required"></textarea>
+    <br>
+    <label class="badge" for="picture">Tasveer Upload Karain:</label>
+    <br>
+    <input class="form-control" type="file" id="picture" name="picture">
+    <br>
+    <label class="badge" for="video">Video Ya Audio Upload Karain:</label>
+    <br>
+    <input type="file" name="video">
+    <br>
+    <br>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="disable_taliyaan" name="disable_taliyaan" value="1">
+        <label class="form-check-label" for="disable_taliyaan">Taliyan Band Karain</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="disable_chupair" name="disable_chupair" value="1">
+        <label class="form-check-label" for="disable_chupair">Chupair Band Karain</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="turn_off_replies" name="turn_off_replies" value="1">
+        <label class="form-check-label" for="turn_off_replies">Jawab Dena Band Karain</label>
+    </div>
+    <br>
+    <br>
+    <button type="submit" class="btn btn-dark">Post Banana</button>
+</form>
+<br>
+<div style="background-color: #f0f0f0; padding: 20px; border: 1px solid #ccc; border-radius: 5px; text-align: center;">
+    <p>Emoji List Dekhne Kailay <a href="{% url 'emoji_list' %}" class="btn btn-primary">Yahan Click Karein</a></p>
+</div>
+
+
+{% endblock %}

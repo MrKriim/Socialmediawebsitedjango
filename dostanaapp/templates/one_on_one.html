@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}1 on 1|Dostana{% endblock %}
+
+{% block description %}Engage in one-on-one interactions with others{% endblock %}
+
+{% block keywords %}one-on-one, personal interactions, communication{% endblock %}
+
+{% block content %}
+    <!-- Content specific to the One-on-One option -->
+    <!-- Include this button where you want to display it -->
+  <div style="text-align: center;">
+    <a href="{% url 'received_invitations' %}" style="display: inline-block; background-color: #3498db; color: #fff; text-align: center; padding: 10px 20px; text-decoration: none; border-radius: 5px; transition: background-color 0.3s ease;">
+        <img src="https://dostana.biz/media/menuicons/1on1keayehueinvites.png" alt="1 on 1 ke aye hue invites" style="display: block; margin: 0 auto 10px; max-width: 100px;">
+        <span style="display: block; font-size: 16px;">1 on 1 ke aye hue invites</span>
+    </a>
+</div>
+
+
+    <br>
+<div style="text-align: center;">
+    <a href="{% url 'list_one_on_one_chats' %}" style="display: inline-block; background-color: #3498db; color: #fff; text-align: center; padding: 10px 20px; text-decoration: none; border-radius: 5px; transition: background-color 0.3s ease;">
+        <img src="https://dostana.biz/media/menuicons/apki1on1.png" alt="Bani Hui 1 on 1 Chats" style="display: block; margin: 0 auto 10px; max-width: 100px;">
+        <span style="display: block; font-size: 16px;">Bani Hui 1 on 1 Chats</span>
+    </a>
+</div>
+
+
+
+{% endblock %}

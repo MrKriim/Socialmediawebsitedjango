@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Signup|Dostana{% endblock %}
+
+
+{% block description %}Signup to dostana easily by entering a username and a password no mobile number or email verification required{% endblock %}
+
+{% block keywords %}signup, signupdostana, signupdostana.biz, usernamepasswordsignup{% endblock %}
+
+{% block content %}
+
+{% block navbar %}
+  {# Empty block to override the navbar block in base.html #}
+{% endblock %}
+
+<!-- Add your specific page content here -->
+
+
+
+
+<div class="card mx-auto" align="center" style="width:auto%;">
+  
+  <div class="card-body">
+    <h4 class="card-title">Signup:Is page pe New Account banate hen.</h4>
+    <form action="{% url 'signup' %}" method="post" class="container-sm mt-4">
+      {% csrf_token %}
+  
+   
+
+      {% if signup_error %}
+      <p class="error" style="background-color:black; color:red;">{{ signup_error }}</p>
+      {% endif %}
+  
+      <div class="form-group">
+        <label for="username">Username 🔒</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password 🔑</label>
+        <input type="text" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+        <input type="hidden" id="device_id" name="device_id" value="">
+        <input type="hidden" id="user_agent" name="user_agent" value="">
+        <input type="hidden" id="fingerprint" name="fingerprint" value="">
+        <input type="hidden" id="ip_address" name="ip_address" value="">
+
+      </div>
+ <!-- Modify the button based on the signup status -->
+{% if signup_enabled %}
+    <button type="submit" id="signupButton" class="btn btn-primary">
+        New Account Banao
+    </button>
+{% endif %}
+
+
+
+    </form>
+    
+    
+   
+  </div>
+</div>
+
+ 
+{% endblock %}

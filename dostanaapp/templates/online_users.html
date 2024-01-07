@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block title %}Online Users | Dostana{% endblock %}
+
+{% block description %}See Online Users List{% endblock %}
+
+{% block keywords %}OnlineUsers,dostana,dostana.biz{% endblock %}
+
+{% block content %}
+
+
+<div style="text-align: center; background-color: #f0f0f0; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); position: relative;">
+    <h1 style="color: #333; font-size: 24px; font-weight: bold; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Online Users</h1>
+    <p style="color: #555; font-size: 16px; margin-bottom: 10px;">Total Online Users: {{ online_users|length }}</p>
+    <ol style="list-style: none; padding: 0;">
+        {% for user_activity in online_users.reverse %}
+            <li style="list-style: none; padding: 10px; background-color: #fff; margin-bottom: 10px; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); position: relative;">
+                <a href="/profile/{{ user_activity.user.username }}/" style="text-decoration: none; color: #333; display: flex; flex-direction: row; align-items: center;">
+                    {% if user_activity.user.userprofile.profile_pic %}
+                        <img src="{{ user_activity.user.userprofile.profile_pic.url }}" alt="{{ user_activity.user.username }}" width="48" height="48" style="border-radius: 50%; margin-right: 10px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);">
+                    {% endif %}
+                   <span style="font-size: 18px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">{{ user_activity.user.username|user_info|safe}}</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ol>
+</div>
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+{% endblock %}

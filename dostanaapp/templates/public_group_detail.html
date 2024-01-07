@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ group.title }} | Dostana{% endblock %}
+
+{% block content %}
+{% load custom_tags %}
+<div class="container">
+
+
+
+    <h4>Group Name:</h4><h5 style="white-space: normal; word-break: break-word; font-size: 18px;">{{ group.title }}</h5>
+    <hr>
+    <h4>Rules:</h4>
+    {% for line in group_rules_lines %}
+            <li style="list-style-type:none">{{ forloop.counter }}. {{ line|truncatechars:40 }}</li>
+    {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+    {% if request.user == group.admin %}
+    <a href="{% url 'change_rules' group_id=group.pk %}" class="btn btn-primary">Change Rules</a>
+    {% endif %}
+    <hr>
+    <h5>Group Info:</h5>
+    <p><strong>Admin:</strong> <a href="{% url 'profile' username=group.admin.username %}">
+            {{ group.admin.username|user_info|safe}}
+        </a></p>
+    <p><strong>Active Members:</strong> {{ active_members_count }}</p>
+
+{% if user.username == group.admin.username %}
+    <form action="{% url 'clear_group_messages' group_id=group.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Clear Group Messages</button>
+    </form>
+{% endif %}
+
+
+    {% if request.user != group.admin %}
+        {% if not user_is_member %}
+            {% if user_was_kicked %}
+                <div class="alert alert-danger" role="alert">
+                    Apko is Group se Kick kardia gya he dubara ye group join kar sakegy
+                    {{ remaining_hours }} hours,
+                    {{ remaining_minutes }} minutes,
+                    and {{ remaining_seconds }} seconds baad.
+                </div>
+            {% else %}
+                <form method="post" action="{% url 'join_group' group_id=group.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary" name="join-group">Join Group</button>
+                </form>
+                {% if user_joined_group %}
+                    <div class="alert alert-success" role="alert">
+                        You have successfully joined the group.
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+
+     {% if remaining_seconds > 0 %}
+    <div class="remaining-time">
+        <p><strong>Baaki Waqt:</strong></p>
+        <p>{{ remaining_hours }} Ghante</p>
+        <p>{{ remaining_minutes }} Mint</p>
+        <p>{{ remaining_seconds }} Sekend</p>
+    </div>
+{% endif %}
+
+
+
+    {% if request.user == group.admin or user_is_member %}
+
+    <h2>Send Message</h2>
+    {% if message_text_error %}
+    <div class="alert alert-danger">
+        {{ message_text_error }}
+    </div>
+{% endif %}
+
+    <form method="post" name="groupform" enctype="multipart/form-data">
+
+        {% csrf_token %}
+        <div class="form-group">
+ <input type="file" name="image" class="form-control-file">
+            {% if image_error %}
+            <small class="text-danger">{{ image_error }}</small>
+            {% endif %}
+            <textarea name="message_text" class="form-control" placeholder="Enter your message..."></textarea>
+		
+        </div>
+
+        <div style="display: flex; align-items: center;">
+
+
+           <button type="submit" class="btn btn-success" style="margin-right: 20px;">Send</button>
+            <a href="{% url 'public_group_detail' group_id=group.pk %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #333; text-align: center; width: 48px; height:39px; border: 1px solid #333; border-radius: 5px; padding: 5px;">
+
+                <span style="font-size: 12px;">Refresh</span>
+            </a>
+        </div>
+
+
+    </form>
+
+    {% endif %}
+
+
+    <h2>Group Messages</h2>
+
+    {% for message in messages %}
+        {% if forloop.counter <= 25 %}
+            <div class="message-list" style="border: 1px solid lightgrey; border-radius:5px; word-break: break-word;">
+                <div class="message {% if message.sender == group.admin %}admin-message{% endif %}">
+                    <div class="message-header" style="font-size: 14px;">
+                        {% if message.sender.userprofile.profile_pic %}
+                         <img src="{{ message.sender.userprofile.profile_pic.url }}" alt="Profile Image" width="32" height="32" style="border-radius: 50%;">
+                        {% endif %}
+
+                        <strong><a href="{% url 'profile' username=message.sender.username %}">
+                                {{ message.sender.username|user_info|safe}}
+                            </a></strong>
+                        - {{ message.timestamp|timesince }} ago
+                    </div>
+                    <div class="message-content" style="font-size: 16px;">
+                     <h6>   {{ message.message_text|render_custom_emoji|safe }} </h6>
+                    </div>
+                    {% if message.image %}
+                        <div class="message-image">
+                            <img src="{{ message.image.url|render_custom_emoji|safe  }}" alt="{{ message.message_text|render_custom_emoji|safe }}" width="200">
+                        </div>
+                    {% endif %}
+                    {% if request.user == group.admin and request.user != message.sender %}
+                        <br>
+                        <div class="message-footer">
+                            <a href="{% url 'kick_user' group_id=group.pk user_id=message.sender.pk %}" class="btn btn-danger btn-sm">Kick</a>
+                            <a href="{% url 'hide_message' group_id=group.pk message_id=message.pk %}" class="btn btn-danger btn-sm">Hide</a>
+                        </div>
+                    {% endif %}
+
+        </div>
+    </div>
+    <br>
+    {% endif %}
+
+    {% endfor %}
+</div>
+
+{% endblock %}

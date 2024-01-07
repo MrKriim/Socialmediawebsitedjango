@@ -1,0 +1,9 @@
+<h1>Sent Chat Invitations</h1>
+<ul>
+    {% for invitation in sent_invitations %}
+        <li>
+            Invitation sent to {{ invitation.recipient.username }}.
+        </li>
+    {% endfor %}
+</ul>
+

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block title %}Watcher|Dostana{% endblock %}
+
+
+{% block content %}
+
+ <h2>{{ watcher_product.name }}</h2>
+  <p>{{ watcher_product.description }}</p>
+
+  <b>1 day price 10 thousand 2 days price 20 thousand 3 days price 30 thousand</b>
+  <br>
+  <br>
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+  <form method="post" action="{% url 'purchase_watcher' watcher_product.id %}">
+    {% csrf_token %}
+    <label for="duration">Select Duration:</label>
+    <select name="duration" id="duration">
+      <option value="1">1 Day</option>
+      <option value="2">2 Days</option>
+      <option value="3">3 Days</option>
+    </select>
+    <button type="submit">Purchase</button>
+  </form>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

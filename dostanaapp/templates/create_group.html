@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Group|Dostana{% endblock %}
+
+{% block description %}Create a new public group{% endblock %}
+
+{% block keywords %}create group, community, interaction{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+        <h1>Create a New Public Group</h1>
+        <b style="color:red; word-break: break-word;">Public Group bnane kailiye 500 Score chaye or 5 se
+            ziada Public group nahi bana sakte</b>
+        <form method="post">
+            {% csrf_token %}
+            {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            <label for="title">Group Name:</label><br>
+            <input type="text" id="title" name="title" maxlength="40" required><br><br>
+            <label for="rules">Group Rules:</label><br>
+            <textarea id="rules" name="rules" rows="5" maxlength="300" required></textarea><br><br>
+            <button type="submit" class="btn btn-primary">Create Group</button>
+        </form>
+    </div>
+{% endblock %}

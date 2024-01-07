@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Change Rules|Dostana{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Change Rules</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="new_rules">New Rules</label>
+                    {% if error_message %}
+                    <div class="alert alert-danger">
+                        {{ error_message }}
+                    </div>
+                    {% endif %}
+                    <textarea id="new_rules" name="new_rules" class="form-control" rows="4">{{ group.rules|linebreaksbr }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Admin Tools|Dostana{% endblock %}
+
+{% block description %}Admin Tools{% endblock %}
+
+{% block keywords %}Admin Tools{% endblock %}
+
+
+{% block content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #333;
+        }
+        /* Add your custom styles for the admin tools here */
+    </style>
+
+<div class="container">
+    <h1>Admin and Staff Tools</h1>
+    <p>Welcome to the Admin and Staff Tools page. Our staff members are our heroes who protect Dostana from evil people and enemies.</p>
+
+    {% if site_config.id %}
+        <form method="post" action="{% url 'toggle_signup' site_config.id %}">
+            {% csrf_token %}
+            {% if site_config.signup_enabled %}
+                <button type="submit" class="btn btn-danger">Turn Off Signup</button>
+            {% else %}
+                <button type="submit" class="btn btn-success">Enable Signup</button>
+            {% endif %}
+        </form>
+    {% else %}
+        <!-- Handle the case when site_config.id is empty or None -->
+        <p>Site configuration ID is not available.</p>
+    {% endif %}
+</div>
+{% endblock %}

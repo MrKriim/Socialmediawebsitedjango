@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block title %}Top Score List{% endblock %}
+
+{% block description %}View the top scores in this page{% endblock %}
+
+{% block keywords %}top scores, leaderboard, competition{% endblock %}
+
+{% block content %}
+   <div class="container text-center">
+    <h1 style="color: #333; font-size: 36px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Top Scorer List</h1>
+    <ol class="list-unstyled" style="list-style-type: none; padding: 0;">
+        {% for user_profile in top_scorers %}
+            <li class="d-flex align-items-center justify-content-center mb-3" style="background-color: #f0f0f0; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);">
+                <span style="color: black; font-size: 24px; margin-right: 10px;">{{ forloop.counter }}.</span>
+                {% if user_profile.profile_pic %}
+                    <img src="{{ user_profile.profile_pic.url }}" alt="Profile Picture" width="48" height="48" style="border-radius: 50%; margin-right: 10px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);">
+                {% endif %}
+                <a href="{% url 'profile' username=user_profile.user.username %}" style="text-decoration: none; color: #333; font-size: 20px;">
+                    {{ user_profile.user.username|user_info|safe}}
+                </a>
+              
+            </li>
+        {% endfor %}
+    </ol>
+</div>
+
+{% endblock %}
+
+

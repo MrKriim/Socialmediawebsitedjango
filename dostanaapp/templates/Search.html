@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Search|Dostana{% endblock %}
+
+{% block description %}This is search page on dostana you can search any user here by his/her username{% endblock %}
+
+{% block keywords %}Search,Finduser,Username,dostana,Searchuser{% endblock %}
+
+
+
+
+
+{% block content %}
+{% load custom_tags %}
+<br>
+<div class="container" align="center">
+  <h1>Search</h1>
+    <form action="{% url 'Search' %}" method="GET">
+      <div class="input-group rounded">
+        <input type="search" placeholder="Jis user ko dhondhna he uska name likhen or Search dbaye" name="username" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+      </div>
+    </form>
+  
+    {% for user in users %}
+    <br>
+    
+    <a href="{% url 'profile' username=user.username %}" style="text-decoration: none;">
+      <h1>{{ user.username|user_info|safe}}</h1>
+  </a>
+  
+    {% empty %}
+      <p>No users found.</p>
+    {% endfor %}
+  </div>
+  
+{% endblock %}

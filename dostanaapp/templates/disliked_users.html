@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block title %}Chupair|Dostana{% endblock %}
+
+
+{% block content %}
+
+<div class="container" align="center">
+  <h3 style="color:red;">Users Jinhone bharey bazar me chupair mari...</h3>
+  <table>
+    {% for user in users %}
+    <tr>
+      <td style="margin-bottom: 10px;">
+        <a href="{% url 'profile' username=user.username %}" style="display: flex; align-items: center; text-decoration: none; color: #333; border-radius: 5px;">
+          <span style="color: red; font-size: 16px;">{{ forloop.counter }}. </span>
+          {% if user.userprofile.profile_pic %}
+            <img src="{{ user.userprofile.profile_pic.url }}" alt="Profile Picture" width="32" height="32" style="border-radius: 50%; margin-right: 5px;">
+          {% endif %}
+          <span style="color: red; font-size: 16px;">{{ user.username|user_info|safe}}</span>
+          <span style="color: red; font-size: 16px;"> ({{ user.points }} points)</span>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+{% endblock %}

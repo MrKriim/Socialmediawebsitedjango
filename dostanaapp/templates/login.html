@@ -1,0 +1,48 @@
+
+{% extends 'base.html' %}
+
+
+{% block navbar %}
+{% endblock %}
+
+{% block title %}Login|Dostana{% endblock %}
+
+{% block description %}Enter Your Username and Password to login into Dostana{% endblock %}
+
+{% block keywords %}login, logindostana, logindostana.biz, usernamepasswordlogin{% endblock %}
+
+
+{% block content %}
+
+<div class="card mx-auto" align="center" style="width:auto%;">
+  <div class="card-body">
+    <h4 class="card-title">Login:Purana account chalao</h4>
+    <form action="{% url 'userlogin' %}" method="post" class="container-sm mt-4">
+      {% csrf_token %}
+      <div class="form-group">
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+
+        <label for="username">Username 🔒</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password 🔑</label>
+        <input type="text" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+     
+      </div>
+      <button type="submit" class="btn btn-primary">Purana Account chalao</button>
+    </form>
+  </div>
+</div>
+
+
+
+{% endblock %}

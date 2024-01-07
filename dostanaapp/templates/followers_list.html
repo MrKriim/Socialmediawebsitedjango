@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); margin-top: 50px;">
+    <h1 style="color: #333; margin-bottom: 20px;">Followers of {{ user_profile.user.username|user_info|safe }}</h1>
+
+    <ul style="list-style-type: none; padding: 0; margin: 0;">
+        {% for follower in followers %}
+        <li style="background-color: #f0f0f0; padding: 10px; border-radius: 5px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center;">
+                <span style="font-size: 16px; color: red; margin-right: 10px;">{{ forloop.counter }}.</span>
+                {% if follower.follower.userprofile.profile_pic %}
+                    <img src="{{ follower.follower.userprofile.profile_pic.url }}" alt="Profile Picture" style="width: 32px; height: 32px; border-radius: 50%; margin-right: 10px;">
+                {% endif %}
+                <a href="{% url 'profile' username=follower.follower.user.username %}" style="font-size: 16px; color: red; text-decoration: none;">{{ follower.follower.user.username|user_info|safe }}</a>
+            </div>
+            {% if user_profile.user == request.user %}
+                <a href="{% url 'remove_follower' username=follower.follower.user.username %}" class="btn btn-danger" style="font-size: 12px;">Remove Follower</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

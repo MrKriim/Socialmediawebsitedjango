@@ -1,0 +1,45 @@
+
+{% extends 'base.html' %}
+
+
+{% block navbar %}
+{% endblock %}
+
+{% block title %}More|Dostana{% endblock %}
+
+{% block description %}You can find more options of dostana in this page{% endblock %}
+
+{% block keywords %}more,dostana,dostana.biz{% endblock %}
+
+
+{% block content %}
+<div class="container" align="center"><h1>More Options</h1></div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 5px;" align="center">
+ 
+   <br>
+
+    <a href="{% url 'PrivateGroup' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #333; text-align: center; width: 48px; height: 80px; border: 1px solid #333; border-radius: 5px; margin-bottom: 5px; flex-grow: 1; max-width: 100px;">
+        <span style="font-size: 28px;">🔒</span>
+        <span style="font-size: 12px;">Private Group</span>
+    </a>
+    <a href="{% url 'OneOnOne' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #333; text-align: center; width: 48px; height: 80px; border: 1px solid #333; border-radius: 5px; margin-bottom: 5px; flex-grow: 1; max-width: 100px;">
+        <span style="font-size: 28px;">💬</span>
+        <span style="font-size: 12px;">1 on 1</span>
+    </a>
+    <a href="{% url 'Games' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #333; text-align: center; width: 48px; height: 80px; border: 1px solid #333; border-radius: 5px; margin-bottom: 5px; flex-grow: 1; max-width: 100px;">
+        <span style="font-size: 28px;">🎮</span>
+        <span style="font-size: 12px;">Games</span>
+    </a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

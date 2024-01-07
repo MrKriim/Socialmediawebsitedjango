@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load custom_tags %}
+{% block content %}
+  <div class="container" style="margin-top:0px;">
+ 
+        <h1 class="text-center" style="font-size: 24px; color: #333; background-color: #F0F0F0; padding: 10px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">1-on-1 Chat with <span style="color: #4CAF50;">{{ chat.participants.all.0.username|user_info|safe }}</span> and <span style="color: #4CAF50;">{{ chat.participants.all.1.username|user_info|safe }}</span></h1>
+
+
+          </div>
+          
+<div id="chat-messages">
+    {% for message in messages %}
+    <div class="message {% if message.sender == request.user %}user-message{% else %}other-user-message{% endif %}" style="border: 1px solid #ccc; padding: 10px; margin: 10px 0; border-radius: 10px; background-color: {% if message.sender == request.user %}#DCF8C6{% else %}#F0F0F0{% endif %};">
+        <div class="message-content" style="display: flex; flex-direction: column;">
+            {% if message.sender == request.user %}
+            <p class="mb-0" style="margin: 0; text-align: right;">
+                <span style="font-weight: bold; font-size: 16px; color: {% if message.sender == request.user %}#4CAF50{% else %}#333{% endif %};">{{ message.sender.username|user_info|safe }}:</span>
+                <br>
+                <span style="font-size: 16px; color: #333;">{{ message.content }}</span>
+            </p>
+            {% else %}
+            <p class="mb-0" style="margin: 0; text-align: left;">
+                <span style="font-weight: bold; font-size: 16px; color: {% if message.sender == request.user %}#4CAF50{% else %}#333{% endif %};">{{ message.sender.username|user_info|safe }}:</span>
+                <br>
+                <span style="font-size: 16px; color: #333;">{{ message.content }}</span>
+            </p>
+            {% endif %}
+            {% if message.image %}
+            <img src="{{ message.image.url }}" alt="Image" class="img-fluid mt-2 rounded" style="max-width: 100%; height: auto;">
+            {% endif %}
+            {% if message.video %}
+            <video width="100%" controls class="mt-2" style="max-width: 100%; height: auto;">
+                <source src="{{ message.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            {% endif %}
+        </div>
+        <div class="message-time" style="font-size: 12px; color: #888; text-align: right;">{{ message.timestamp|timesince }} ago</div>
+    </div>
+    {% endfor %}
+</div>
+
+
+            
+            
+            {% if error_messages %}
+<div class="alert alert-danger">
+  <ul>
+    {% for error in error_messages %}
+    <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+    
+            
+            <div class="form-group">
+            <form method="post" action="{% url 'send_message' chat_id=chat.id %}" enctype="multipart/form-data">
+              {% csrf_token %}
+               
+                <label for="image">Tasveer chunein:</label>
+                <input type="file" name="image" id="image" class="form-control-file">
+            
+            
+                <label for="video">Video upload karein:</label>
+                <input type="file" name="video" id="video" class="form-control-file">
+            
+                <label for="message">Apna message type karein:</label>
+                <input type="text" name="message" id="message" class="form-control" placeholder="Apna message type karein">
+           
+            <br>
+              <button type="submit" class="btn btn-primary btn-block">Send</button>
+            </form>
+     </div>
+  
+{% endblock %}

@@ -1,0 +1,243 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="{% block description %}Default Description{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}Default Keywords{% endblock %}">
+    <link rel="icon" type="image/x-icon" href="/media/favicon/favicon.ico">
+   
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1646502426945071"
+     crossorigin="anonymous"></script>
+
+
+    {% bootstrap_css %}
+
+
+
+
+
+</head>
+
+<body>
+
+ 
+
+<div id="container-7c044f7129511a96700c27356fdf1c3f"></div>
+    <header>
+
+     <div class="container" align="center" style=" left: 0; width: 100%; background-color: #FF69B4; padding: 20px;">
+    <h1 style="font-family: 'Arial', sans-serif; color: white; font-size: 36px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0;">
+        Dostana
+    </h1>
+</div>
+
+
+
+
+<div class="mainmenu" style="left: 0; width: 100%; background-color: #FFD700; padding: 10px; display: flex; justify-content: center; z-index: 1;">
+        {% if user.is_authenticated %}
+        <a href="{% url 'index' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #FF4500; border: 2px solid #FF4500; border-radius: 5px; margin-bottom: 5px; transition: background-color 0.3s, border-color 0.3s;">
+            <img src="https://dostana.biz/media/menuicons/home.png" alt="️Notif" style="width: 28px; height: 28px;">
+            <span style="font-size: 12px;">Home</span>
+        </a>
+
+       
+
+<a href="{% url 'Share' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #007bff; border: 2px solid #007bff; border-radius: 5px; margin-bottom: 5px; transition: background-color 0.3s, border-color 0.3s;">
+    <img src="https://dostana.biz/media/menuicons/share.png" alt="️Notif" style="width: 28px; height: 28px;">
+    <span style="font-size: 12px;">Share</span>
+</a>
+
+
+
+           {% url 'Notifications' as notifications_url %}
+<a href="{{ notifications_url }}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #FF6347; border: 2px solid #FF6347; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+    <img src="https://dostana.biz/media/menuicons/notif.png" alt="️Notif" style="width: 28px; height: 28px;">
+    <span style="font-size: 12px;">Notif</span>
+
+    {% if unread_notification_count > 0 %}
+        <span class="unread-count" style="position: absolute; top: 5px; right: 5px; background-color: #FFD700; color: #333; font-size: 10px; padding: 2px 6px; border-radius: 50%;">{{ unread_notification_count }}</span>
+    {% endif %}
+</a>
+
+
+                  <a href="{% url 'PublicGroup' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #32CD32; border: 2px solid #32CD32; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+    <img src="https://dostana.biz/media/menuicons/publicgroup.png" alt="️Public Group" style="width: 28px; height: 28px;">
+    <span style="font-size: 12px;">Public Group</span>
+</a>
+
+
+<a href="{% url 'Search' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #0074D9; border: 2px solid #0074D9; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+    <img src="https://dostana.biz/media/menuicons/search.png" alt="Search" style="width: 28px; height: 28px;">
+    <span style="font-size: 12px;">Search</span>
+</a>
+
+
+            <a href="{% url 'profile' request.user.username %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #FFA500; border: 2px solid #FFA500; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+    <img src="https://dostana.biz/media/menuicons/profile.png" alt="Profile" style="width: 28px; height: 28px;">
+    <span style="font-size: 12px;">Profile</span>
+</a>
+
+                 </div>
+                    <!-- "For Me" button -->
+                    <div align="center" class="mainmenu" style="left: 0; width: 100%; background: linear-gradient(135deg, #FF69B4, #32CD32); display: flex; justify-content: center; z-index: 1;">
+
+    <!-- "Online Users" button with the same style -->
+    
+
+    <a href="{% url 'for_me_view' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #4A90E2; border: 2px solid #4A90E2; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+    <img src="https://dostana.biz/media/menuicons/forme.png" alt="For Me" style="width: 28px; height: 28px;">
+    <span style="font-size: 12px;">For Me</span>
+</a>
+
+<a href="{% url 'OneOnOne' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #007bff; border: 2px solid #007bff; border-radius: 5px; margin-bottom: 5px; transition: background-color 0.3s, border-color 0.3s;">
+    <span style="font-size: 28px;">💬</span>
+    <span style="font-size: 12px;">1 on 1</span>
+</a>
+
+<a href="{% url 'TopScores' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #FFC107; border: 2px solid #FFC107; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+    <img src="https://dostana.biz/media/menuicons/top.png" alt="Top Scorers" style="width: 28px; height: 28px;">
+    <span style="font-size: 12px;">Top Scorers</span>
+</a>
+
+         <a href="{% url 'online_users' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #42A5F5; border: 2px solid #42A5F5; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+    <img src="https://dostana.biz/media/menuicons/online.png" alt="Online Users" style="width: 28px; height: 28px;">
+    <span style="font-size: 12px;">Online Users</span>
+</a>
+
+ 
+
+
+
+
+                </div>
+
+            {% endif %}
+
+
+
+
+    </header>
+   <style>
+    body{
+        background-color:#f5f5f5;
+    }
+</style>
+    <div class="container" align="Center">
+
+
+
+
+    <main>
+    </div>
+        {% block content %}
+
+
+
+
+        {% endblock %}
+    </main>
+
+    <footer>
+
+
+        <div style="margin-top: 20px;" class="mainmenu" ></div> <!-- Add margin to create space between content and footer -->
+      <div class="mainmenu" style="bottom: 80px; left: 0; width: 100%; background: linear-gradient(135deg, #FF69B4, #32CD32); padding: 10px; display: flex; justify-content: center; z-index: 1;">
+            {% if user.is_authenticated %}
+
+            {% if user.is_staff %}
+            <a href="{% url 'admin_tools_url_name' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color:green; border: 2px solid #FFC107; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+                ⚙️
+                <span style="font-size: 12px;">Admin and Staff</span>
+            </a>
+            {% endif %}
+            
+            <a href="{% url 'shop' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #FFC107; border: 2px solid #FFC107; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+                <img src="https://dostana.biz/media/menuicons/shop.png" alt="Shop" style="width: 28px; height: 28px;">
+                <span style="font-size: 12px;">Shop</span>
+            </a>
+            
+
+
+          <a href="{% url 'PublicGroup' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #4CAF50; border: 2px solid #4CAF50; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+    <img src="https://dostana.biz/media/menuicons/publicgroup.png" alt="Public Group" style="width: 28px; height: 28px;">
+    <span style="font-size: 12px;">Public Group</span>
+</a>
+
+
+<a href="{% url 'Search' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #FF5733; border: 2px solid #FF5733; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+    <img src="https://dostana.biz/media/menuicons/search.png" alt="Search" style="width: 28px; height: 28px;">
+    <span style="font-size: 12px;">Search</span>
+</a>
+
+      <a href="{% url 'More' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #795548; border: 2px solid #795548; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+    <img src="https://dostana.biz/media/menuicons/more.png" alt="More" style="width: 28px; height: 28px;">
+    <span style="font-size: 12px;">More</span>
+</a>
+
+
+
+<a href="{% url 'logout' %}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-right: 10px; text-decoration: none; color: #ffffff; text-align: center; width: 48px; height: 80px; background-color: #FFA500; border: 2px solid #FFA500; border-radius: 5px; margin-bottom: 5px; position: relative; transition: background-color 0.3s, border-color 0.3s;">
+    <img src="https://dostana.biz/media/menuicons/logout.png" alt="Logout" style="width: 28px; height: 28px;">
+    <span style="font-size: 12px;">Logout</span>
+</a>
+
+
+
+
+
+
+            {% endif %}
+        </div>
+       <div class="submenu" style="bottom: 0; left: 0; width: 100%; background: linear-gradient(135deg, #FF69B4, #32CD32); padding: 20px; z-index: 1;" align="center">
+            {% if user.is_authenticated %}
+               <nav style="margin-top: 10px;">
+    <a href="{% url 'aboutus' %}" style="font-size: 16px; text-decoration: none; color: #333; display: inline-block; margin-right: 20px;">
+        <span style="font-size: 24px;">📚</span> About Us
+    </a>
+    <a href="{% url 'contactus' %}" style="font-size: 16px; text-decoration: none; color: #333; display: inline-block; margin-right: 20px;">
+        <span style="font-size: 24px;">📞</span> Contact Us
+    </a>
+    <a href="{% url 'privacypolicy' %}" style="font-size: 16px; text-decoration: none; color: #333; display: inline-block; margin-right: 20px;">
+        <span style="font-size: 24px;">🔒</span> Privacy Policy
+    </a>
+    <a href="{% url 'terms&conditions' %}" style="font-size: 16px; text-decoration: none; color: #333; display: inline-block; margin-right: 20px;">
+        <span style="font-size: 24px;">📝</span> Terms &amp; Conditions
+    </a>
+    <a href="{% url 'rules' %}" style="font-size: 16px; text-decoration: none; color: #333; display: inline-block;">
+        <span style="font-size: 24px;">⚖️</span> Rules
+    </a>
+</nav>
+
+            {% else %}
+                <!-- Show Login and SignUp links -->
+               <nav style="margin-top: 10px;">
+    <a href="{% url 'aboutus' %}" style="font-size: 16px; text-decoration: none; color: #333; display: inline-block; margin-right: 20px;">
+        <span style="font-size: 24px;">📚</span> About Us
+    </a>
+    <a href="{% url 'contactus' %}" style="font-size: 16px; text-decoration: none; color: #333; display: inline-block; margin-right: 20px;">
+        <span style="font-size: 24px;">📞</span> Contact Us
+    </a>
+    <a href="{% url 'privacypolicy' %}" style="font-size: 16px; text-decoration: none; color: #333; display: inline-block; margin-right: 20px;">
+        <span style="font-size: 24px;">🔒</span> Privacy Policy
+    </a>
+    <a href="{% url 'terms&conditions' %}" style="font-size: 16px; text-decoration: none; color: #333; display: inline-block; margin-right: 20px;">
+        <span style="font-size: 24px;">📝</span> Terms &amp; Conditions
+    </a>
+    <a href="{% url 'userlogin' %}" style="font-size: 16px; text-decoration: none; color: #333; display: inline-block; margin-right: 20px;">
+        <span style="font-size: 24px;">✍️</span> Log In
+    </a>
+    <a href="{% url 'signup' %}" style="font-size: 16px; text-decoration: none; color: #333; display: inline-block;">
+        <span style="font-size: 24px;">✍️</span> Sign Up
+    </a>
+</nav>
+
+            {% endif %}
+        </div>
+    </footer>
+    </body>
+    </html>
