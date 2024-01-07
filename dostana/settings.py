@@ -38,7 +38,7 @@ ALLOWED_HOSTS = ['dostana.biz', 'www.dostana.biz']
 CSRF_TRUSTED_ORIGINS = ['https://dostana.biz','https://www.dostana.biz']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-71fa.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://dostana.biz','https://www.dostana.biz']
 
 # Application definition
 
@@ -152,11 +152,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 # Enable WhiteNoise for serving static files
+# Enable WhiteNoise for serving static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Location of your static files
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+
+
+
 
 
 
