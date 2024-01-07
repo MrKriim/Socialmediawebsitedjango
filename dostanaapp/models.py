@@ -183,7 +183,28 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 # Create a "Watcher" product instance in the database
+watcher_product, created = Product.objects.get_or_create(
+    name="Watcher",
+    description="Istemaal kar ke istemal karain: User dosray users ki private profiles ko dekh saktay hain.",
+    duration=1,  # Default duration is 1 day (1 din)
+    price_in_points=10000,  # Price for 1 day is 10,000 points
+)
 
+# Create a 2-day "Watcher" product instance in the database
+watcher_product_2days, created = Product.objects.get_or_create(
+    name="Watcher (2 Din)",  # Watcher (2 Days)
+    description="Istemaal kar ke istemal karain: User dosray users ki private profiles ko 2 din tak dekh saktay hain.",
+    duration=2,
+    price_in_points=20000,  # Price for 2 days is 20,000 points
+)
+
+# Create a 3-day "Watcher" product instance in the database
+watcher_product_3days, created = Product.objects.get_or_create(
+    name="Watcher (3 Din)",  # Watcher (3 Days)
+    description="Istemaal kar ke istemal karain: User dosray users ki private profiles ko 3 din tak dekh saktay hain.",
+    duration=3,
+    price_in_points=30000,  # Price for 3 days is 30,000 points
+)
 
 
 class Reply(models.Model):
