@@ -26,16 +26,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'your_secret_key_here'
+SECRET_KEY = '6f2c4dfc4490a511d09f5bf25b5e2096e2079eb4bdfd612d'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['dostana.biz', 'www.dostana.biz']
+ALLOWED_HOSTS = ['*']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://dostana.biz','https://www.dostana.biz']
+CSRF_TRUSTED_ORIGINS = []
 
 # Application definition
 
@@ -83,19 +83,12 @@ TEMPLATES = [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Dostana',
-        'USER': 'Dostana',
-        'PASSWORD': 'inspiron3421',
-        'HOST': 'localhost',
-        'PORT': '3306',
- 	'OPTIONS': {
-            'charset': 'utf8mb4',
-            'init_command': "SET collation_connection = utf8mb4_unicode_ci"
-   },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
-}
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
