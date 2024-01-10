@@ -101,7 +101,9 @@ DATABASES = {
 }
 
 
-MEDIA_ROOT = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Define the URL that will serve the media files
 MEDIA_URL = '/media/'
 
 
