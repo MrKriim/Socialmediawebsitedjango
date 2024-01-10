@@ -89,11 +89,17 @@ TEMPLATES = [
 # Update the DATABASES setting
 
 
-private_db_url = 'postgresql://postgres:C32B3g33g32Ed1246f6F51g5Facf6b3c@postgres.railway.internal:5432/railway'
-
 DATABASES = {
-   'default' : dj_database_url.parse(private_db_url)
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Dostana',
+        'USER': 'Dostana',
+        'PASSWORD': 'inspiron3421',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
+
 
 MEDIA_ROOT = '/media/'
 MEDIA_URL = '/media/'
