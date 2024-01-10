@@ -992,7 +992,14 @@ def edit_profile(request, username):
                 if profile_pic.size > 10 * 1024 * 1024:
                     return render(request, 'edit_profile.html', {'user_profile': user_profile, 'error_message': 'Image size should be below 10 MB'})
 
-                
+                # Generate a random name for the image file
+                import uuid
+                from os import path
+                random_name = str(uuid.uuid4())[:12]  # Adjust the length as needed
+                file_extension = path.splitext(profile_pic.name)[1]  # Get the file extension
+
+                # Save the image with the random name and original extension
+                user_profile.profile_pic.save(f'{random_name}{file_extension}', profile_pic, save=True)
 
             user_profile.save()
 
@@ -1004,6 +1011,7 @@ def edit_profile(request, username):
     else:
         # Redirect the user to their own profile page if not the owner
         return redirect(reverse('profile', kwargs={'username': request.user.username}))
+
 
 
 
