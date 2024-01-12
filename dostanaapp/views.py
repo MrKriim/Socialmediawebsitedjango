@@ -417,9 +417,31 @@ def rules(request):
 def Search(request):
     # Add your view logic here if needed
     return render(request, 'Search.html')
+
+
 @transaction.atomic
 @login_required(login_url='/signup/')
 def Share(request):
+    def validate_image_size(size):
+        if size > 10 * 1024 * 1024:
+            raise ValidationError("Image size should be less than 10MB.")
+
+    def validate_video_size(size):
+        if size > 20 * 1024 * 1024:
+            raise ValidationError("Video size should be less than 20MB.")
+
+    def validate_video_format(filename):
+        valid_video_extensions = ['.mp4', '.avi', '.mov', '.mkv']
+        file_extension = os.path.splitext(filename)[1].lower()
+
+        if file_extension not in valid_video_extensions:
+            raise ValidationError("Invalid video format. Please upload a valid video file.")
+
+    def generate_unique_filename(prefix, extension):
+        random_filename = ''.join(random.choice(string.ascii_letters) for _ in range(10))
+        timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
+        return f"{prefix}_{timestamp}_{random_filename}{extension}"
+
     update_user_activity(request)
 
     POST_INTERVAL_SECONDS = 30
@@ -445,12 +467,14 @@ def Share(request):
             if 'picture' in request.FILES:
                 picture = request.FILES['picture']
                 validate_image_size(picture.size)
-                post = create_post(request.user, content, picture_title, picture, turn_off_replies, disable_taliyaan, disable_chupair)
+                filename = generate_unique_filename('picture', os.path.splitext(picture.name)[1])
+                post = create_post(request.user, content, picture_title, picture, turn_off_replies, disable_taliyaan, disable_chupair, filename)
             elif 'video' in request.FILES:
                 video = request.FILES['video']
                 validate_video_size(video.size)
                 validate_video_format(video.name)
-                post = create_post(request.user, content, picture_title, video=video, turn_off_replies=turn_off_replies)
+                filename = generate_unique_filename('video', os.path.splitext(video.name)[1])
+                post = create_post(request.user, content, picture_title, video=video, turn_off_replies=turn_off_replies, filename=filename)
             else:
                 post = create_post(request.user, content, turn_off_replies=turn_off_replies, disable_taliyaan=disable_taliyaan, disable_chupair=disable_chupair)
         except ValidationError as e:
@@ -466,60 +490,6 @@ def Share(request):
         'video_error': video_error,
         'error_message': error_message,
     })
-
-def contains_dangerous_characters(text):
-    dangerous_characters = [';', "'", '/', '\\', '<', '>', '&']
-    return any(char in text for char in dangerous_characters)
-
-
-@login_required(login_url='/signup/')
-def add_reply(request, post_id):
-    update_user_activity(request)
-    post = get_object_or_404(Post, id=post_id)
-    error_message = ""
-
-    if request.method == 'POST':
-        reply_content = request.POST.get('reply_content')
-
-        # Check if the user has already commented on this post
-        existing_comment = Comment.objects.filter(user=request.user, post=post).first()
-
-        if not existing_comment:
-            # If the user hasn't commented on this post yet, create a comment
-            comment = Comment.objects.create(user=request.user, post=post)
-        else:
-            # If the user has already commented, use the existing comment
-            comment = existing_comment
-
-        # Create a reply associated with the comment
-        reply = Reply.objects.create(
-            user=request.user,
-            post=post,
-            content=reply_content,
-            comment=comment
-        )
-
-        # Send notifications to post owner and all users on the post except the comment author
-        notification_users = User.objects.filter(Q(post=post) | Q(comment__post=post)).exclude(id=request.user.id)
-        for user in notification_users:
-            # Check if a notification already exists for this reply and user
-            existing_notification = Notification.objects.filter(user=user, post=post, reply=reply).first()
-            if not existing_notification:
-                notification = Notification.objects.create(
-                    user=user,
-                    post=post,
-                    reply=reply,
-                    timestamp=reply.created_at
-                )
-                # Ensure that only the latest 10 notifications per user are retained
-       
-
-        return redirect('post_detail', post_id=post_id)
-
-    replies = Reply.objects.filter(post=post).order_by('-created_at')
-    return render(request, 'post_detail.html', {'post': post, 'replies': replies, 'error_message': error_message})
-
-
 
 
 @login_required(login_url='/signup/')
