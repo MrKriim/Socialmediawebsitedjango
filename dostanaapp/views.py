@@ -417,12 +417,11 @@ def rules(request):
 def Search(request):
     # Add your view logic here if needed
     return render(request, 'Search.html')
-
 @transaction.atomic
 @login_required(login_url='/signup/')
 def Share(request):
     update_user_activity(request)
-    
+
     POST_INTERVAL_SECONDS = 30
     content_error, picture_title_error, video_error, dangerous_characters_error = "", "", "", ""
 
@@ -467,7 +466,6 @@ def Share(request):
         'video_error': video_error,
         'error_message': error_message,
     })
-
 
 def contains_dangerous_characters(text):
     dangerous_characters = [';', "'", '/', '\\', '<', '>', '&']
