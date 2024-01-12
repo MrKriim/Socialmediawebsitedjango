@@ -447,7 +447,7 @@ def Share(request):
     POST_INTERVAL_SECONDS = 120
 
     content_error = ""
-    picture_title_error = ""
+    content_error = ""
     video_error = ""
     dangerous_characters_error = ""
 
@@ -479,11 +479,11 @@ def Share(request):
 
     if request.method == 'POST':
         content = request.POST.get('content', '')
-        picture_title = request.POST.get('picture_title', '')
+       
 
-        # Remove HTML tags from content and picture_title
+        # Remove HTML tags from content and content
         content = strip_tags(content)
-        picture_title = strip_tags(picture_title)
+       
 
         if not content:
             content_error = "Content cannot be blank."
@@ -511,7 +511,7 @@ def Share(request):
 
 
 
-            post = Post(user=request.user, content=content, picture=picture, picture_title=picture_title, replies_allowed=not turn_off_replies)
+            post = Post(user=request.user, content=content, picture=picture, content=content, replies_allowed=not turn_off_replies)
             if disable_taliyaan:
                         post.disable_taliyaan = True
 
@@ -525,7 +525,7 @@ def Share(request):
                         return render(request, 'Share.html', {'content': content, 'content_error': image_error_message})
 
             else:
-                post = Post(user=request.user, content=content, picture=picture, picture_title=picture_title, replies_allowed=not turn_off_replies)
+                post = Post(user=request.user, content=content, picture=picture, content=content, replies_allowed=not turn_off_replies)
                 if disable_taliyaan:
                     post.disable_taliyaan = True
 
@@ -567,7 +567,7 @@ def Share(request):
                 for chunk in video.chunks():
                     f.write(chunk)
 
-            post = Post(user=request.user, content=content, video=video_url, picture_title=picture_title, replies_allowed=not turn_off_replies)
+            post = Post(user=request.user, content=content, video=video_url, content=content, replies_allowed=not turn_off_replies)
 
         else:
             # Handle text posts
@@ -584,7 +584,7 @@ def Share(request):
     return render(request, 'Share.html', {
         'content_error': content_error,
         'dangerous_characters_error': dangerous_characters_error,
-        'picture_title_error': picture_title_error,
+        'content_error': content_error,
         'video_error': video_error,
         'error_message': error_message,
     })
