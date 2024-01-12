@@ -130,24 +130,17 @@ class Post(models.Model):
         ('Picture', 'Picture'),
         ('Video', 'Video'),
     )
-    POST_STATUS_CHOICES = (
-        ('Pending', 'Pending'),
-        ('Approved', 'Approved'),
-    )
+    
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post_type = models.CharField(max_length=20, choices=POST_TYPE_CHOICES, default='Text')
-    picture_title = models.CharField(max_length=100, default='No Title')
     content = models.TextField()
     picture = models.ImageField(upload_to='post_pictures/', null=True, blank=True)
     video = models.FileField(upload_to='posts/videos', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     liked_by = models.ManyToManyField(User, related_name='liked_posts', blank=True)
     disliked_by = models.ManyToManyField(User, related_name='disliked_posts', blank=True)
-    status = models.CharField(max_length=10, choices=POST_STATUS_CHOICES, default='Pending')
-    hidden = models.BooleanField(default=False)
      # New fields to disable taliyaan and chupair
-    last_post_delete_time = models.DateTimeField(null=True, blank=True)
     replies_allowed = models.BooleanField(default=True)
     disable_taliyaan = models.BooleanField(default=False)
     disable_chupair = models.BooleanField(default=False)
