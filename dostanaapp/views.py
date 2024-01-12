@@ -511,7 +511,7 @@ def Share(request):
 
 
 
-            post = Post(user=request.user, content=content, picture=picture, content=content, replies_allowed=not turn_off_replies)
+            post = Post(user=request.user, content=content, picture=picture,  replies_allowed=not turn_off_replies)
             if disable_taliyaan:
                         post.disable_taliyaan = True
 
