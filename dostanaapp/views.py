@@ -525,7 +525,7 @@ def Share(request):
                         return render(request, 'Share.html', {'content': content, 'content_error': image_error_message})
 
             else:
-                post = Post(user=request.user, content=content, picture=picture, content=content, replies_allowed=not turn_off_replies)
+                post = Post(user=request.user, content=content, picture=picture, replies_allowed=not turn_off_replies)
                 if disable_taliyaan:
                     post.disable_taliyaan = True
 
