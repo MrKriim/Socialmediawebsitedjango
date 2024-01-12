@@ -477,7 +477,7 @@ def Share(request):
         if error_message is not None:
             return render(request, 'Share.html', {'content_error': error_message})
 
-        if 'picture' in request.FILES:
+         if 'picture' in request.FILES:
     try:
         picture = request.FILES['picture']
 
