@@ -50,7 +50,7 @@ from django.contrib.auth.views import LogoutView
 from django.core.cache import cache
 from django.utils import timesince
 from django.utils.timezone import now
-
+from django.http import StreamingHttpResponse
 
 def shop(request):
     # Add your view logic here
@@ -478,43 +478,34 @@ def Share(request):
             return render(request, 'Share.html', {'content_error': error_message})
 
         if 'picture' in request.FILES:
-            # Handle image posts
-            picture = request.FILES['picture']
+    try:
+        picture = request.FILES['picture']
 
-            # Ensure the image size is within limits
-            if picture.size > 10 * 1024 * 1024:
-                return render(request, 'Share.html', {'content_error': "Image size should be less than 10MB."})
+        # Ensure the image size is within limits
+        if picture.size > 10 * 1024 * 1024:
+            return render(request, 'Share.html', {'content_error': "Image size should be less than 10MB."})
 
-            random_filename = ''.join(random.choice(string.ascii_letters) for _ in range(10))
-            file_extension = os.path.splitext(picture.name)[1]
-            new_filename = random_filename + file_extension
+        random_filename = ''.join(random.choice(string.ascii_letters) for _ in range(10))
+        file_extension = os.path.splitext(picture.name)[1]
+        new_filename = random_filename + file_extension
 
+        post = Post(user=request.user, content=content, picture_title=picture_title, replies_allowed=not turn_off_replies)
 
+        if disable_taliyaan:
+            post.disable_taliyaan = True
 
-            post = Post(user=request.user, content=content, picture=picture, picture_title=picture_title, replies_allowed=not turn_off_replies)
-            if disable_taliyaan:
-                        post.disable_taliyaan = True
+        if disable_chupair:
+            post.disable_chupair = True
 
-            if disable_chupair:
-                        post.disable_chupair = True
+        post.picture.save(new_filename, picture, save=False)
 
-                        post.picture.save(new_filename, save=False)
+        # Increase the user's score by 20 for uploading an image
+        request.user.userprofile.scores += 20
+        request.user.userprofile.save()
 
-                        
-                        image_error_message = "Invalid image format. Please upload a valid image."
-                        return render(request, 'Share.html', {'content': content, 'content_error': image_error_message})
-
-            else:
-                post = Post(user=request.user, content=content, picture=picture, picture_title=picture_title, replies_allowed=not turn_off_replies)
-                if disable_taliyaan:
-                    post.disable_taliyaan = True
-
-                if disable_chupair:
-                    post.disable_chupair = True
-
-                # Increase the user's score by 20 for uploading an image
-                request.user.userprofile.scores += 20
-                request.user.userprofile.save()
+    except Exception as e:
+        image_error_message = f"Error uploading image: {e}"
+        return render(request, 'Share.html', {'content': content, 'content_error': image_error_message})
 
         elif 'video' in request.FILES:
             # Handle video posts
