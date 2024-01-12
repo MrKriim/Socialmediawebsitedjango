@@ -59,4 +59,4 @@ admin.site.register(SiteConfiguration)
 
 
 
-admin.site.register(Post, PostAdmin)
+admin.site.register(Post)
