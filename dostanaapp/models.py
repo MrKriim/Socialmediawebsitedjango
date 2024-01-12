@@ -141,6 +141,7 @@ class Post(models.Model):
     liked_by = models.ManyToManyField(User, related_name='liked_posts', blank=True)
     disliked_by = models.ManyToManyField(User, related_name='disliked_posts', blank=True)
      # New fields to disable taliyaan and chupair
+    last_post_delete_time = models.DateTimeField(null=True, blank=True)
     replies_allowed = models.BooleanField(default=True)
     disable_taliyaan = models.BooleanField(default=False)
     disable_chupair = models.BooleanField(default=False)
