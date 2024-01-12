@@ -418,30 +418,29 @@ def Search(request):
     # Add your view logic here if needed
     return render(request, 'Search.html')
 
+def validate_image_size(size):
+    if size > 10 * 1024 * 1024:
+        raise ValidationError("Image size should be less than 10MB.")
+
+def validate_video_size(size):
+    if size > 20 * 1024 * 1024:
+        raise ValidationError("Video size should be less than 20MB.")
+
+def validate_video_format(filename):
+    valid_video_extensions = ['.mp4', '.avi', '.mov', '.mkv']
+    file_extension = os.path.splitext(filename)[1].lower()
+
+    if file_extension not in valid_video_extensions:
+        raise ValidationError("Invalid video format. Please upload a valid video file.")
+
+def generate_unique_filename(prefix, extension):
+    random_filename = ''.join(random.choice(string.ascii_letters) for _ in range(10))
+    timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
+    return f"{prefix}_{timestamp}_{random_filename}{extension}"
 
 @transaction.atomic
 @login_required(login_url='/signup/')
 def Share(request):
-    def validate_image_size(size):
-        if size > 10 * 1024 * 1024:
-            raise ValidationError("Image size should be less than 10MB.")
-
-    def validate_video_size(size):
-        if size > 20 * 1024 * 1024:
-            raise ValidationError("Video size should be less than 20MB.")
-
-    def validate_video_format(filename):
-        valid_video_extensions = ['.mp4', '.avi', '.mov', '.mkv']
-        file_extension = os.path.splitext(filename)[1].lower()
-
-        if file_extension not in valid_video_extensions:
-            raise ValidationError("Invalid video format. Please upload a valid video file.")
-
-    def generate_unique_filename(prefix, extension):
-        random_filename = ''.join(random.choice(string.ascii_letters) for _ in range(10))
-        timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
-        return f"{prefix}_{timestamp}_{random_filename}{extension}"
-
     update_user_activity(request)
 
     POST_INTERVAL_SECONDS = 30
