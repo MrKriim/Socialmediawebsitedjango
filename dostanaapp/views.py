@@ -567,7 +567,7 @@ def Share(request):
                 for chunk in video.chunks():
                     f.write(chunk)
 
-            post = Post(user=request.user, content=content, video=video_url, content=content, replies_allowed=not turn_off_replies)
+            post = Post(user=request.user, content=content, video=video_url, replies_allowed=not turn_off_replies)
 
         else:
             # Handle text posts
