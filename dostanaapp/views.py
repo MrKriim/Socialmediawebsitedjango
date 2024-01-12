@@ -418,139 +418,47 @@ def Search(request):
     # Add your view logic here if needed
     return render(request, 'Search.html')
 
-
+@transaction.atomic
 @login_required(login_url='/signup/')
 def Share(request):
     update_user_activity(request)
-
-    # Define the time interval (in seconds) a user must wait between posts
+    
     POST_INTERVAL_SECONDS = 30
-
-    content_error = ""
-    picture_title_error = ""
-    video_error = ""
-    dangerous_characters_error = ""
+    content_error, picture_title_error, video_error, dangerous_characters_error = "", "", "", ""
 
     disable_taliyaan = request.POST.get('disable_taliyaan')
     disable_chupair = request.POST.get('disable_chupair')
-
-    # Check if turn_off_replies is specified
     turn_off_replies = request.POST.get('turn_off_replies')
 
     last_post = request.user.post_set.order_by('-created_at').first()
-    time_since_last_post = timedelta(seconds=0)  # Initialize with a default value
-    error_message = None  # Initialize error_message as None
-
-    if last_post is not None:
-        last_post_created_at = last_post.created_at
-        # Make sure 'last_post_created_at' is "aware" with the timezone
-        if timezone.is_naive(last_post_created_at):
-            last_post_created_at = timezone.make_aware(last_post_created_at, timezone.get_current_timezone())
-
-        time_since_last_post = timezone.now() - last_post_created_at
-
-        if time_since_last_post < timedelta(seconds=POST_INTERVAL_SECONDS):
-            time_remaining = timedelta(seconds=POST_INTERVAL_SECONDS) - time_since_last_post
-            error_message = f"Please wait {time_remaining.total_seconds()} seconds before creating another post."
-        else:
-            error_message = None  # Reset error_message if the time restriction is met
-    else:
-        error_message = None  # No previous posts, so no time restriction
+    time_since_last_post = timezone.now() - last_post.created_at if last_post else timedelta(seconds=0)
+    error_message = f"Please wait {max(0, POST_INTERVAL_SECONDS - time_since_last_post.total_seconds())} seconds before creating another post." if time_since_last_post < timedelta(seconds=POST_INTERVAL_SECONDS) else None
 
     if request.method == 'POST':
-        content = request.POST.get('content', '')
-        picture_title = request.POST.get('picture_title', '')
+        content, picture_title = strip_tags(request.POST.get('content', '')), strip_tags(request.POST.get('picture_title', ''))
+        content_error = "Content cannot be blank." if not content else "Content must be between 5 and 300 characters." if not 5 <= len(content) <= 300 else ""
+        dangerous_characters_error = "Content contains illegal and dangerous characters." if contains_dangerous_characters(content) else ""
 
-        # Remove HTML tags from content and picture_title
-        content = strip_tags(content)
-        picture_title = strip_tags(picture_title)
-
-        if not content:
-            content_error = "Content cannot be blank."
-        elif len(content) < 5 or len(content) > 300:
-            content_error = "Content must be between 5 and 300 characters."
-
-        if contains_dangerous_characters(content):
-            dangerous_characters_error = "Content contains illegal and dangerous characters."
-
-        # Check if the error_message is not None (i.e., the user must wait)
-        if error_message is not None:
+        if error_message:
             return render(request, 'Share.html', {'content_error': error_message})
 
-         if 'picture' in request.FILES:
-    try:
-        picture = request.FILES['picture']
+        try:
+            if 'picture' in request.FILES:
+                picture = request.FILES['picture']
+                validate_image_size(picture.size)
+                post = create_post(request.user, content, picture_title, picture, turn_off_replies, disable_taliyaan, disable_chupair)
+            elif 'video' in request.FILES:
+                video = request.FILES['video']
+                validate_video_size(video.size)
+                validate_video_format(video.name)
+                post = create_post(request.user, content, picture_title, video=video, turn_off_replies=turn_off_replies)
+            else:
+                post = create_post(request.user, content, turn_off_replies=turn_off_replies, disable_taliyaan=disable_taliyaan, disable_chupair=disable_chupair)
+        except ValidationError as e:
+            return render(request, 'Share.html', {'content': content, 'content_error': str(e)})
 
-        # Ensure the image size is within limits
-        if picture.size > 10 * 1024 * 1024:
-            return render(request, 'Share.html', {'content_error': "Image size should be less than 10MB."})
-
-        random_filename = ''.join(random.choice(string.ascii_letters) for _ in range(10))
-        file_extension = os.path.splitext(picture.name)[1]
-        new_filename = random_filename + file_extension
-
-        post = Post(user=request.user, content=content, picture_title=picture_title, replies_allowed=not turn_off_replies)
-
-        if disable_taliyaan:
-            post.disable_taliyaan = True
-
-        if disable_chupair:
-            post.disable_chupair = True
-
-        post.picture.save(new_filename, picture, save=False)
-
-        # Increase the user's score by 20 for uploading an image
-        request.user.userprofile.scores += 20
+        request.user.userprofile.scores += 20 if 'picture' in request.FILES else 0
         request.user.userprofile.save()
-
-    except Exception as e:
-        image_error_message = f"Error uploading image: {e}"
-        return render(request, 'Share.html', {'content': content, 'content_error': image_error_message})
-
-        elif 'video' in request.FILES:
-            # Handle video posts
-            video = request.FILES['video']
-
-            # Ensure the video size is within limits
-            if video.size > 20 * 1024 * 1024:
-                video_error = "Video size should be less than 21MB."
-                return render(request, 'Share.html', {'content': content, 'video_error': video_error})
-
-            random_filename = ''.join(random.choice(string.ascii_letters) for _ in range(10))
-            file_extension = os.path.splitext(video.name)[1].lower()
-
-            # Check if the uploaded file is a valid video format
-            valid_video_extensions = ['.mp4', '.avi', '.mov', '.mkv']
-            if file_extension not in valid_video_extensions:
-                video_error = "Invalid video format. Please upload a valid video file."
-                return render(request, 'Share.html', {'content': content, 'video_error': video_error})
-
-            new_filename = random_filename + file_extension
-            video_path = os.path.join(settings.MEDIA_ROOT, 'videos', new_filename)
-
-            # Create the 'videos' directory if it doesn't exist
-            video_dir = os.path.dirname(video_path)
-            os.makedirs(video_dir, exist_ok=True)
-
-            video_url = os.path.join(settings.MEDIA_URL, 'videos', new_filename)
-
-            with open(video_path, 'wb') as f:
-                for chunk in video.chunks():
-                    f.write(chunk)
-
-            post = Post(user=request.user, content=content, video=video_url, picture_title=picture_title, replies_allowed=not turn_off_replies)
-
-        else:
-            # Handle text posts
-            post = Post(user=request.user, content=content, replies_allowed=not turn_off_replies)
-            if disable_taliyaan:
-                post.disable_taliyaan = True
-
-            if disable_chupair:
-                post.disable_chupair = True
-
-        post.save()
-        return redirect('index')
 
     return render(request, 'Share.html', {
         'content_error': content_error,
@@ -559,8 +467,6 @@ def Share(request):
         'video_error': video_error,
         'error_message': error_message,
     })
-
-
 
 
 def contains_dangerous_characters(text):
