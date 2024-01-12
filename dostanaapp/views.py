@@ -444,7 +444,7 @@ def Share(request):
     update_user_activity(request)
 
     # Define the time interval (in seconds) a user must wait between posts
-    POST_INTERVAL_SECONDS = 45
+    POST_INTERVAL_SECONDS = 60
 
     content_error = ""
     content_error = ""
@@ -502,8 +502,8 @@ def Share(request):
             picture = request.FILES['picture']
 
             # Ensure the image size is within limits
-            if picture.size > 10 * 1024 * 1024:
-                return render(request, 'Share.html', {'content_error': "Image size should be less than 10MB."})
+            if picture.size > 1 * 1024 * 1024:
+                return render(request, 'Share.html', {'content_error': "Image size should be less than 1MB."})
 
             random_filename = ''.join(random.choice(string.ascii_letters) for _ in range(10))
             file_extension = os.path.splitext(picture.name)[1]
