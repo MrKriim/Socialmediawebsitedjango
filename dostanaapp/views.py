@@ -490,6 +490,11 @@ def Share(request):
         'error_message': error_message,
     })
 
+
+def contains_dangerous_characters(text):
+    dangerous_characters = [';', "'", '/', '\\', '<', '>', '&']
+    return any(char in text for char in dangerous_characters)
+
 @login_required(login_url='/signup/')
 def add_reply(request, post_id):
     update_user_activity(request)
