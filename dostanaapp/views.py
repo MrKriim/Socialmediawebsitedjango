@@ -490,6 +490,52 @@ def Share(request):
         'error_message': error_message,
     })
 
+@login_required(login_url='/signup/')
+def add_reply(request, post_id):
+    update_user_activity(request)
+    post = get_object_or_404(Post, id=post_id)
+    error_message = ""
+
+    if request.method == 'POST':
+        reply_content = request.POST.get('reply_content')
+
+        # Check if the user has already commented on this post
+        existing_comment = Comment.objects.filter(user=request.user, post=post).first()
+
+        if not existing_comment:
+            # If the user hasn't commented on this post yet, create a comment
+            comment = Comment.objects.create(user=request.user, post=post)
+        else:
+            # If the user has already commented, use the existing comment
+            comment = existing_comment
+
+        # Create a reply associated with the comment
+        reply = Reply.objects.create(
+            user=request.user,
+            post=post,
+            content=reply_content,
+            comment=comment
+        )
+
+        # Send notifications to post owner and all users on the post except the comment author
+        notification_users = User.objects.filter(Q(post=post) | Q(comment__post=post)).exclude(id=request.user.id)
+        for user in notification_users:
+            # Check if a notification already exists for this reply and user
+            existing_notification = Notification.objects.filter(user=user, post=post, reply=reply).first()
+            if not existing_notification:
+                notification = Notification.objects.create(
+                    user=user,
+                    post=post,
+                    reply=reply,
+                    timestamp=reply.created_at
+                )
+                # Ensure that only the latest 10 notifications per user are retained
+       
+
+        return redirect('post_detail', post_id=post_id)
+
+    replies = Reply.objects.filter(post=post).order_by('-created_at')
+    return render(request, 'post_detail.html', {'post': post, 'replies': replies, 'error_message': error_message})
 
 @login_required(login_url='/signup/')
 def toggle_comment_visibility(request, reply_id):
