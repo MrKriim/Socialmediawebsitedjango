@@ -60,7 +60,7 @@ admin.site.register(SiteConfiguration)
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ('user', 'content', 'created_at')
-    list_filter = ('status', 'user__username')
+    list_filter = ('user__username')
     search_fields = ('user__username', 'content')
     ordering = ('-created_at',)
 
