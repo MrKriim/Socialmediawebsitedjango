@@ -51,7 +51,7 @@ from django.core.cache import cache
 from django.utils import timesince
 from django.utils.timezone import now
 from django.http import StreamingHttpResponse
-from .celery import app as celery_app  # Import your Celery app instance
+from dostanaapp.celery import app as celery_app  # Import your Celery app instance
 from .celery import process_uploaded_photo
 
 
