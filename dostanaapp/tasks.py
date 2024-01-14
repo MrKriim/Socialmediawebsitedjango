@@ -3,7 +3,7 @@ from celery import Celery
 from PIL import Image
 import os
 
-app = Celery('your_project')
+app = Celery('dostana')
 
 @app.task
 def process_uploaded_photo(photo_path):
