@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from dostana.celery import process_uploaded_photo
 
 
 from django.contrib.auth import get_user_model
