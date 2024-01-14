@@ -51,6 +51,10 @@ from django.core.cache import cache
 from django.utils import timesince
 from django.utils.timezone import now
 from django.http import StreamingHttpResponse
+from .celery import app as celery_app  # Import your Celery app instance
+from .celery import process_uploaded_photo
+
+
 
 def shop(request):
     # Add your view logic here
@@ -579,6 +583,8 @@ def Share(request):
                 post.disable_chupair = True
 
         post.save()
+        celery_app.send_task('dostana.celery.process_uploaded_photo', args=[post.picture.path])
+
         return redirect('index')
 
     return render(request, 'Share.html', {
