@@ -152,7 +152,11 @@ class Post(models.Model):
     def __str__(self):
         return f"Post by {self.user.username} at {self.created_at}"
 
-
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.picture:
+            # Call Celery task for photo processing
+            process_uploaded_photo.delay(self.picture.path)
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
