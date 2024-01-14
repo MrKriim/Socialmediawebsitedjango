@@ -521,6 +521,7 @@ def Share(request):
 
             if disable_chupair:
                         post.disable_chupair = True
+                        celery_app.send_task('dostana.celery.process_uploaded_photo', args=[post.picture.path])
 
                         post.picture.save(new_filename, save=False)
 
@@ -583,8 +584,7 @@ def Share(request):
                 post.disable_chupair = True
 
         post.save()
-        celery_app.send_task('dostana.celery.process_uploaded_photo', args=[post.picture.path])
-
+       
         return redirect('index')
 
     return render(request, 'Share.html', {
