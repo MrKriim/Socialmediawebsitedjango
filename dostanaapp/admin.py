@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.contrib.admin.widgets import ForeignKeyRawIdWidget
 from .models import Post, Reply
-from .models import UserProfile, PublicGroup, GroupMessage, GroupMembership, Follower, UnfollowLog, Following, UserActivity, DeviceInfo, SiteConfiguration
+from .models import UserProfile, PublicGroup, GroupMessage, GroupMembership, Follower, UnfollowLog, Following, UserActivity, DeviceInfo, SiteConfiguration,OneOnOneChat
 
 
 
@@ -48,7 +48,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 admin.site.register(UserProfile, UserProfileAdmin)
 
 admin.site.register(PublicGroup)
-
+admin.site.register(OneOnOneChat)
 
 
 admin.site.register(UserActivity)
