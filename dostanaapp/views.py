@@ -1,6 +1,7 @@
 from django.template.defaultfilters import truncatechars
 from django.shortcuts import render,HttpResponse,redirect,get_object_or_404
 from django.contrib.auth.models import User
+from dostanaapp.models import Notification
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 import random
