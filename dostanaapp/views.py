@@ -1846,6 +1846,7 @@ def send_invitation(request, recipient_id):
 
         # Send notification to the recipient
         content = f"Apko {request.user.username} ne 1 on 1 invite bejha hai! ✨😯"
+        print(Notification)
         Notification.create_invite_notification(recipient, content, sent_by=request.user)  # Updated to include sent_by field
 
         messages.success(request, 'Invitation sent successfully.')
