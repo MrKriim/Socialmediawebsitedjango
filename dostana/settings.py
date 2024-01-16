@@ -30,7 +30,7 @@ SECRET_KEY = '6f2c4dfc4490a511d09f5bf25b5e2096e2079eb4bdfd612d'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['dostana.biz', 'www.dostana.biz']
 
