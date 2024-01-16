@@ -1,15 +1,9 @@
 /* main.css */
 
-
-
-.testbox {
-    max-width: 800px;
-    background-color:black;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.testitag {
+    color: red;
+    background-color: blue;
+    padding: 5px;
+    display: inline-block;
 }
 
-h1 {
-    color:red;
-    background-color:red;
-}
