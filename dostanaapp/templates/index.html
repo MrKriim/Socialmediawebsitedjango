@@ -145,58 +145,40 @@
         {% else %}
             <p style="color:white;" ><a style="color:red; background-color:white;" href="{% url 'disliked_users' post.id %}"><img src="https://dostana.biz/media/clapslap/slap.png"  alt="️clap" style="width:28px; height:28px;">chupair {{ post.disliked_by.count }}</a>Chupair Kisne mari dekhne kailiye chupair ke chote tasveer pe ungli dbaay aik chupair se score -1 hota he</p>
         {% endif %}
-
-
 <div style="display: flex; align-items: center; margin-right: 10px;">
     {% if user != post.user and user not in post.liked_by.all and user not in post.disliked_by.all %}
         {% if not post.disable_taliyaan %}
-            <a href="{% url 'like_post' post_id=post.id %}" style="text-decoration: none; color: green;">
-                <img src="https://dostana.biz/media/clapslap/clap.png" alt="Taliyaan" style="width: 32px; height: 32px;">
+            <a href="{% url 'like_post' post_id=post.id %}" style="text-decoration: none; color: green; margin-right: 5px;">
+                <img src="https://dostana.biz/media/clapslap/clap.png" alt="Taliyaan" style="width: 48px; height: 48px;">
             </a>
         {% endif %}
-    {% endif %}
 
-    {% if user != post.user and user not in post.liked_by.all and user not in post.disliked_by.all %}
         {% if not post.disable_chupair %}
-            <a href="{% url 'female_dislike_post' post_id=post.id %}" style="text-decoration: none; color: purple;">
-                <img src="/media/clapslap/slapfemale.gif" alt="Female Dislike" style="width: 32px; height: 32px;">
+            <a href="{% url 'female_dislike_post' post_id=post.id %}" style="text-decoration: none; color: purple; margin-right: 5px;">
+                <img src="/media/clapslap/slapfemale.gif" alt="Female Dislike" style="width: 48px; height: 48px;">
             </a>
-            <a href="{% url 'male_dislike_post' post_id=post.id %}" style="text-decoration: none; color: green;">
-                <img src="/media/clapslap/slapmale.gif" alt="Male Dislike" style="width: 32px; height: 32px;">
+            <a href="{% url 'male_dislike_post' post_id=post.id %}" style="text-decoration: none; color: green; margin-right: 5px;">
+                <img src="/media/clapslap/slapmale.gif" alt="Male Dislike" style="width: 48px; height: 48px;">
             </a>
         {% endif %}
     {% endif %}
-</div>
 
-<div class="reply-box" style="padding: 5px; background-color: #3498db; text-align: center;">
-    {% if post.replies_allowed %}
-        <a href="{% url 'post_detail' post_id=post.id %}" style="text-decoration: none; color: white;">
-            <img src="https://dostana.biz/media/clapslap/jawabdo.png" alt="️jawabdo" style="width: 32px; height: 32px;">
-        </a>
-    {% endif %}
-</div>
-
-<div class="total-replies" style="text-align: center; background-color: #3498db;">
-    <img src="https://dostana.biz/media/clapslap/jawabdo.png" alt="️jawabdo" style="width: 18px; height: 18px;">
-    <span class="total-replies-text" style="font-weight: bold; font-size: 14px; color: white;">
-        <h3>{{ post.replies.count }}</h3><b> Jawab diye gaye</b>
-    </span>
-</div>
-
-
-
-<!-- Add this code to your profile template or another appropriate location -->
-
-
-
-
-        </div>
-        <br>
+    <div class="reply-box" style="padding: 5px; background-color: #3498db; text-align: center; margin-right: 5px;">
+        {% if post.replies_allowed %}
+            <a href="{% url 'post_detail' post_id=post.id %}" style="text-decoration: none; color: white;">
+                <img src="https://dostana.biz/media/clapslap/jawabdo.png" alt="️jawabdo" style="width: 48px; height: 48px;">
+            </a>
+        {% endif %}
     </div>
-    {% empty %}
-        <p>No posts found.</p>
-    {% endfor %}
+
+    <div class="total-replies" style="text-align: center; background-color: #3498db;">
+        <img src="https://dostana.biz/media/clapslap/jawabdo.png" alt="️jawabdo" style="width: 28px; height: 28px;">
+        <span class="total-replies-text" style="font-weight: bold; font-size: 14px; color: white;">
+            <h3>{{ post.replies.count }}</h3><b> Jawab diye gaye</b>
+        </span>
+    </div>
 </div>
+
 
 
     <style>
