@@ -1,0 +1,8 @@
+/* main.css */
+
+.testitag {
+    color: red;
+    background-color: blue;
+    padding: 5px;
+    display: inline-block;
+}
