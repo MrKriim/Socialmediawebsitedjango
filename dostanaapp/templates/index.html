@@ -161,7 +161,7 @@
      <div style="display: flex; align-items: center; margin-right: 10px;">
     {% if user != post.user and user not in post.liked_by.all and user not in post.disliked_by.all %}
         {% if not post.disable_chupair %}
-            {% if user.userprofile.gender == 'female' %}
+            {% if user.userprofile.gender == 'Female' %}
                 <!-- Female dislike button -->
                 <a style="text-decoration: none; color: purple;" href="{% url 'female_dislike_post' post_id=post.id %}">
                     <div class="action-box" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: auto; height:auto; padding: 20px; border: 1px solid white; border-radius: 5px; margin-right: 10px; background-color:#3498db; box-shadow: 0px 0px 5px 0px #f5f5dc;">
@@ -169,7 +169,7 @@
                         <span style="font-weight: bold; font-size: 14px; color: purple; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">Female Dislike</span>
                     </div>
                 </a>
-            {% elif user.userprofile.gender == 'male' %}
+            {% elif user.userprofile.gender == 'Male' %}
                 <!-- Male dislike button -->
                 <a style="text-decoration: none; color: green;" href="{% url 'male_dislike_post' post_id=post.id %}">
                     <div class="action-box" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: auto; height:auto; padding: 20px; border: 1px solid white; border-radius: 5px; margin-right: 10px; background-color:#3498db; box-shadow: 0px 0px 5px 0px #f5f5dc;">
