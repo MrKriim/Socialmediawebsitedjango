@@ -148,63 +148,41 @@
 
 
 <div style="display: flex; align-items: center; margin-right: 10px;">
-       {% if user != post.user and user not in post.liked_by.all and user not in post.disliked_by.all %}
+    {% if user != post.user and user not in post.liked_by.all and user not in post.disliked_by.all %}
         {% if not post.disable_taliyaan %}
-            <a style="text-decoration: none; color: green;" href="{% url 'like_post' post_id=post.id %}">
-                <div class="action-box" style="display: flex; height:auto; flex-direction: column; align-items: center; text-align: center; width: auto; padding: 20px; border: 1px solid white; border-radius: 5px; margin-right: 10px; background-color:#3498db; box-shadow: 0px 0px 5px 0px #f5f5dc;">
-                    <img src="https://dostana.biz/media/clapslap/clap.png" alt="Taliyaan" style="width: 48px; height: 48px;">
-                    <span style="font-weight: bold; font-size: 14px; color: green; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">Taliyaan</span>
-                </div>
+            <a href="{% url 'like_post' post_id=post.id %}" style="text-decoration: none; color: green;">
+                <img src="https://dostana.biz/media/clapslap/clap.png" alt="Taliyaan" style="width: 32px; height: 32px;">
             </a>
         {% endif %}
     {% endif %}
-     <div style="display: flex; align-items: center; margin-right: 10px;">
+
     {% if user != post.user and user not in post.liked_by.all and user not in post.disliked_by.all %}
         {% if not post.disable_chupair %}
-            {% if user.userprofile.gender == 'Female' %}
-                <!-- Female dislike button -->
-                <a style="text-decoration: none; color: purple;" href="{% url 'female_dislike_post' post_id=post.id %}">
-                    <div class="action-box" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: auto; height:auto; padding: 20px; border: 1px solid white; border-radius: 5px; margin-right: 10px; background-color:#3498db; box-shadow: 0px 0px 5px 0px #f5f5dc;">
-                        <img src="/media/clapslap/slapfemale.gif" alt="Female Dislike" style="width: 48px; height: 48px;">
-                        <span style="font-weight: bold; font-size: 14px; color: purple; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">Female Dislike</span>
-                    </div>
-                </a>
-            {% elif user.userprofile.gender == 'Male' %}
-                <!-- Male dislike button -->
-                <a style="text-decoration: none; color: green;" href="{% url 'male_dislike_post' post_id=post.id %}">
-                    <div class="action-box" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: auto; height:auto; padding: 20px; border: 1px solid white; border-radius: 5px; margin-right: 10px; background-color:#3498db; box-shadow: 0px 0px 5px 0px #f5f5dc;">
-                        <img src="/media/clapslap/slapmale.gif" alt="Male Dislike" style="width: 48px; height: 48px;">
-                        <span style="font-weight: bold; font-size: 14px; color: green; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">Male Dislike</span>
-                    </div>
-                </a>
-            {% else %}
-                <!-- Default female GIF -->
-                <img src="/media/clapslap/slapfemale.gif" alt="Default Female GIF" style="width: 48px; height: 48px;">
-            {% endif %}
+            <a href="{% url 'female_dislike_post' post_id=post.id %}" style="text-decoration: none; color: purple;">
+                <img src="/media/clapslap/slapfemale.gif" alt="Female Dislike" style="width: 32px; height: 32px;">
+            </a>
+            <a href="{% url 'male_dislike_post' post_id=post.id %}" style="text-decoration: none; color: green;">
+                <img src="/media/clapslap/slapmale.gif" alt="Male Dislike" style="width: 32px; height: 32px;">
+            </a>
         {% endif %}
     {% endif %}
 </div>
 
-
-
-<div class="reply-box" style="padding: 5px; background-color:#3498db; text-align: center;">
+<div class="reply-box" style="padding: 5px; background-color: #3498db; text-align: center;">
     {% if post.replies_allowed %}
-    <a href="{% url 'post_detail' post_id=post.id %}" style="text-decoration: none; color:white;">
-        <img src="https://dostana.biz/media/clapslap/jawabdo.png" alt="️jawabdo" style="width: 48px; height: 48px;">
-        <span class="reply-text" style="font-weight: bold; font-size: 14px;">Jawab Do</span>
-    </a>
+        <a href="{% url 'post_detail' post_id=post.id %}" style="text-decoration: none; color: white;">
+            <img src="https://dostana.biz/media/clapslap/jawabdo.png" alt="️jawabdo" style="width: 32px; height: 32px;">
+        </a>
     {% endif %}
 </div>
 
-
-<div class="total-replies" style="text-align: center;  background-color:#3498db;">
-    <img src="https://dostana.biz/media/clapslap/jawabdo.png" alt="️jawabdo" style="width: 28px; height: 28px;">
-    <span class="total-replies-text" style="font-weight: bold; font-size: 14px; color:white;">
-   <span class="total-replies-text"> <h3>{{ post.replies.count }}</h3> <b> Jawab diye gaye</b></span>
-
-        
+<div class="total-replies" style="text-align: center; background-color: #3498db;">
+    <img src="https://dostana.biz/media/clapslap/jawabdo.png" alt="️jawabdo" style="width: 18px; height: 18px;">
+    <span class="total-replies-text" style="font-weight: bold; font-size: 14px; color: white;">
+        <h3>{{ post.replies.count }}</h3><b> Jawab diye gaye</b>
     </span>
 </div>
+
 
 
 <!-- Add this code to your profile template or another appropriate location -->
