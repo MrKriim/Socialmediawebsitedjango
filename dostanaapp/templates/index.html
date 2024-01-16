@@ -158,17 +158,33 @@
             </a>
         {% endif %}
     {% endif %}
-     {% if user != post.user and user not in post.liked_by.all and user not in post.disliked_by.all %}
-      {% if not post.disable_chupair %}
-        <a style="text-decoration: none; color: red;" href="{% url 'dislike_post' post_id=post.id %}">
-            <div class="action-box" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: auto; height:auto; padding: 20px; border: 1px solid white; border-radius: 5px; margin-right: 10px; background-color:#3498db; box-shadow: 0px 0px 5px 0px #f5f5dc;">
-                <img src="https://dostana.biz/media/clapslap/slap.png" alt="Chupair" style="width: 48px; height: 48px;">
-                <span style="font-weight: bold; font-size: 14px; color: red; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">Chupair</span>
-            </div>
-        </a>
-    {% endif %}
+     <div style="display: flex; align-items: center; margin-right: 10px;">
+    {% if user != post.user and user not in post.liked_by.all and user not in post.disliked_by.all %}
+        {% if not post.disable_chupair %}
+            {% if user.userprofile.gender == 'female' %}
+                <!-- Female dislike button -->
+                <a style="text-decoration: none; color: purple;" href="{% url 'female_dislike_post' post_id=post.id %}">
+                    <div class="action-box" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: auto; height:auto; padding: 20px; border: 1px solid white; border-radius: 5px; margin-right: 10px; background-color:#3498db; box-shadow: 0px 0px 5px 0px #f5f5dc;">
+                        <img src="https://dostana.biz/media/slapfemale.gif" alt="Female Dislike" style="width: 48px; height: 48px;">
+                        <span style="font-weight: bold; font-size: 14px; color: purple; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">Female Dislike</span>
+                    </div>
+                </a>
+            {% elif user.userprofile.gender == 'male' %}
+                <!-- Male dislike button -->
+                <a style="text-decoration: none; color: green;" href="{% url 'male_dislike_post' post_id=post.id %}">
+                    <div class="action-box" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: auto; height:auto; padding: 20px; border: 1px solid white; border-radius: 5px; margin-right: 10px; background-color:#3498db; box-shadow: 0px 0px 5px 0px #f5f5dc;">
+                        <img src="https://dostana.biz/media/slapmale.gif" alt="Male Dislike" style="width: 48px; height: 48px;">
+                        <span style="font-weight: bold; font-size: 14px; color: green; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">Male Dislike</span>
+                    </div>
+                </a>
+            {% else %}
+                <!-- Default female GIF -->
+                <img src="https://dostana.biz/media/slapfemale.gif" alt="Default Female GIF" style="width: 48px; height: 48px;">
+            {% endif %}
+        {% endif %}
     {% endif %}
 </div>
+
 
 
 <div class="reply-box" style="padding: 5px; background-color:#3498db; text-align: center;">
