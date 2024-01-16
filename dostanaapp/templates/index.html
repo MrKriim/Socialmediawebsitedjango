@@ -11,6 +11,7 @@
 
 {% block content %}
     {% load custom_tags %}
+   <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1646502426945071"
      crossorigin="anonymous"></script>
 
@@ -76,7 +77,7 @@
 </div>
 
 <i class="testitag">This is a test icon</i>
-<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
    {% for post in latest_posts %}
   <div class="post">
       <div class="post-header" style="word-break: break-word;">
