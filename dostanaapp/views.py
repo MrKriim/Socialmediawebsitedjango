@@ -449,7 +449,7 @@ def Share(request):
     update_user_activity(request)
 
     # Define the time interval (in seconds) a user must wait between posts
-    POST_INTERVAL_SECONDS = 60
+    POST_INTERVAL_SECONDS = 25
 
     content_error = ""
     content_error = ""
